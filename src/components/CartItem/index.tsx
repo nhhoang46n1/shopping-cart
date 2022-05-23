@@ -1,5 +1,9 @@
 import React, { FC, useState } from "react";
-import { decreaseItem, increaseItem } from "../store/cart/cartSlice";
+import {
+  decreaseItem,
+  increaseItem,
+  removeItem,
+} from "../store/cart/cartSlice";
 import { useAppDispatch } from "../store/hooks";
 
 interface ICartItem {
@@ -18,6 +22,10 @@ const CartItem: FC<ICartItem> = ({ product, quantityCart }) => {
   function handleDecreaseItem(id: string) {
     dispatch(decreaseItem(id));
     setQuantity((pre: number) => pre - 1);
+  }
+
+  function handleRemoveItem(id: string) {
+    dispatch(removeItem(id));
   }
   return (
     <div className="grid grids-col-12 gap-3 h-full mt-2">
@@ -61,6 +69,14 @@ const CartItem: FC<ICartItem> = ({ product, quantityCart }) => {
                   onClick={() => handleIncreaseItem(product?.productId)}
                 >
                   <i className="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div
+                className="flex items-center justify-between bg-pink-300 rounded-lg px-5 py-1"
+                onClick={() => handleRemoveItem(product?.productId)}
+              >
+                <button className="outline-none border-0 bg-transparent text-red-600">
+                  <i className="fa-solid fa-trash-can"></i>
                 </button>
               </div>
             </div>

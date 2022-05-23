@@ -2,7 +2,9 @@ import React, { FC } from "react";
 
 const HeaderName: FC = () => {
   return (
-    <h2 className="text-2xl text-black-500 font-bold text-center">Daisie</h2>
+    <h2 className="text-3xl text-black-500 font-black text-center tracking-widest ">
+      DAISIE
+    </h2>
   );
 };
 

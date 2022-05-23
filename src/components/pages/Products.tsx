@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import ItemDesc from "../ItemDesc";
 import ItemList from "../ItemList";
-import Loading from "../Loading";
+import Loading from "../common/Loading";
 import { useAppSelector } from "../store/hooks";
 
 const Products: FC = () => {

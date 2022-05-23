@@ -1,11 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  addItem,
-  decreaseItem,
-  increaseItem,
-} from "../../store/cart/cartSlice";
+import { addItem } from "../../store/cart/cartSlice";
 import { useAppSelector } from "../../store/hooks";
+import toast, { Toaster } from "react-hot-toast";
 
 interface IButtonAddToCart {
   productId: string;
@@ -26,6 +23,7 @@ const ButtonAddToCart: FC<IButtonAddToCart> = ({ productId }) => {
 
   function handleAddItem() {
     dispatch(addItem(cartStorage));
+    toast.success("Add to cart successfully!");
   }
 
   useEffect(() => setQuantity(1), [productId]);
@@ -55,6 +53,7 @@ const ButtonAddToCart: FC<IButtonAddToCart> = ({ productId }) => {
         <p className="mb-0 font-bold text-[24px]">
           ${(productDetail?.price * quantity).toFixed(2)}
         </p>
+        <Toaster position="bottom-right" reverseOrder={false} />
         <button
           className="flex items-center justify-center duration-100 shadow-md px-6 py-3 text-[14px] rounded-lg   
     bg-pink-500 text-white hover:bg-pink-400 false gap-4"

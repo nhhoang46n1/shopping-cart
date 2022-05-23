@@ -1,12 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import CartItem from "../CartItem";
-import { AddProduct } from "../store/cart/cartSlice";
-import { useAppSelector } from "../store/hooks";
+import { AddProduct, clearItem } from "../store/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import toast, { Toaster } from "react-hot-toast";
+import PopUp from "../common/PopUp";
 
 const CartCheckOut: FC = () => {
+  const [isCheckOut, setIsCheckOut] = useState(false);
   const carts = useAppSelector((state) => state.Cart.cart);
-
+  const dispatch = useAppDispatch();
+  console.log(isCheckOut);
   const subTotal = carts.reduce(
     (acc: number, cart: AddProduct) =>
       acc + cart.productDetail.price * cart.quantity,
@@ -14,6 +18,12 @@ const CartCheckOut: FC = () => {
   );
   const shippingCost = subTotal > 0 ? 10 : 0;
   const cartsLenght = carts.length;
+
+  const handleCheckOut = () => {
+    setIsCheckOut(!isCheckOut);
+    dispatch(clearItem("Clear all"));
+    toast.success("Purchased successfully!");
+  };
   return (
     <div className="rounded-lg mx-auto overflow-hidden bg-transparent container xl:px-48 h-auto">
       <div className="grid lg:grid-cols-12 pt-5 gap-4 h-full auto-rows-min">
@@ -71,22 +81,33 @@ const CartCheckOut: FC = () => {
               </div>
             </div>
             <div className="col-span-12">
-              <button
-                className={`flex items-center justify-center duration-100 shadow-md gap-2 px-4 py-2 text-md rounded-md   
-                bg-pink-500 text-white  opacity-50  w-full ${
+              <Toaster />
+              <div className="relative">
+                <button
+                  className={`flex items-center justify-center duration-100 shadow-md gap-2 px-4 py-2 text-md rounded-md   
+                bg-pink-500 text-white w-full ${
                   cartsLenght < 1
-                    ? "cursor-not-allowed"
-                    : "cursor-pointer hover:bg-pink-700"
+                    ? "cursor-not-allowed opacity-50"
+                    : "cursor-pointer hover:bg-red-600"
                 }`}
-              >
-                Checkout
-              </button>
+                  onClick={() => setIsCheckOut(!isCheckOut)}
+                  disabled={true ? cartsLenght < 1 : false}
+                >
+                  Checkout
+                </button>
+                {isCheckOut && (
+                  <PopUp
+                    checkOut={handleCheckOut}
+                    isCheckOut={isCheckOut}
+                  ></PopUp>
+                )}
+              </div>
             </div>
             <div className="col-span-12">
               <Link to="/products">
                 <button
                   className="flex items-center justify-center duration-100 shadow-md gap-2 px-4 py-2 text-md rounded-md   
-    border border-pink-500 text-pink-500 hover:bg-pink-200 false w-full"
+    border border-pink-500 text-pink-500 hover:bg-pink-200 false w-full "
                 >
                   Continue shopping
                 </button>

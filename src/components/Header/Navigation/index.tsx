@@ -15,7 +15,7 @@ const Navigation: FC = () => {
           key={index}
           to={`/${name}`}
           className={`text-gray-500 hover:text-black inline-block text-lg font-normal relative capitalize ${
-            isActive === index ? "font-semibold active-navigation" : ""
+            isActive === index ? "font-extrabold active-navigation" : ""
           }`}
           onClick={() => handleActive(index)}
         >

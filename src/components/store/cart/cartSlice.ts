@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { start } from "repl";
 import { IProduct } from "../../../models";
 
 
@@ -53,10 +54,15 @@ const cartSlice = createSlice({
             const addProductId = action.payload;
             const handleAddAndUpdateItem = state.cart.findIndex((x:any) => (x.productDetail.productId === addProductId))
             state.cart.splice(handleAddAndUpdateItem, 1)
+        },
+
+        clearItem: (state, action: PayloadAction<any>) => {
+            const addProductId = action.payload
+            state.cart = []
         }
     }
 }) 
 
-export const {addItem, decreaseItem, increaseItem, removeItem} = cartSlice.actions
+export const {addItem, decreaseItem, increaseItem, removeItem, clearItem} =  cartSlice.actions
 const cartProducer = cartSlice.reducer
 export default cartProducer 
