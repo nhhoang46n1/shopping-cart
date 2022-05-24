@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CartItem from "../CartItem";
 import { AddProduct, clearItem } from "../store/cart/cartSlice";
@@ -10,7 +10,6 @@ const CartCheckOut: FC = () => {
   const [isCheckOut, setIsCheckOut] = useState(false);
   const carts = useAppSelector((state) => state.Cart.cart);
   const dispatch = useAppDispatch();
-  console.log(isCheckOut);
   const subTotal = carts.reduce(
     (acc: number, cart: AddProduct) =>
       acc + cart.productDetail.price * cart.quantity,

@@ -16,7 +16,6 @@ const initialState:cartState = {
     cart: [],
 }
 
-
 const cartSlice = createSlice({
     name: "cart",
     initialState,
@@ -31,6 +30,7 @@ const cartSlice = createSlice({
             const handleAddAndUpdateItem = state.cart.findIndex((x:any) => (x.productDetail.productId === addProductId))
             if(handleAddAndUpdateItem >= 0) {
                 state.cart[handleAddAndUpdateItem].quantity += newQuantity
+               
             } else {
                 state.cart.push(addItem)
             }
@@ -57,7 +57,7 @@ const cartSlice = createSlice({
         },
 
         clearItem: (state, action: PayloadAction<any>) => {
-            const addProductId = action.payload
+            // const addProductId = action.payload
             state.cart = []
         }
     }

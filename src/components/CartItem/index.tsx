@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   decreaseItem,
   increaseItem,
@@ -12,7 +12,7 @@ interface ICartItem {
 }
 const CartItem: FC<ICartItem> = ({ product, quantityCart }) => {
   const dispatch = useAppDispatch();
-  const [quantity, setQuantity] = useState(quantityCart || 1);
+  let [quantity, setQuantity] = useState(quantityCart || 1);
 
   function handleIncreaseItem(id: string) {
     dispatch(increaseItem(id));
@@ -27,6 +27,9 @@ const CartItem: FC<ICartItem> = ({ product, quantityCart }) => {
   function handleRemoveItem(id: string) {
     dispatch(removeItem(id));
   }
+  useEffect(() => {
+    setQuantity((quantity = quantityCart));
+  }, [product]);
   return (
     <div className="grid grids-col-12 gap-3 h-full mt-2">
       <div className="col-span-12 cursor-pointer">

@@ -6,7 +6,6 @@ import { getProductList, getProductListLoading } from "./productSlice";
 function* fetchProductList() {
     try {
         const response:ListResponse<IProduct> = yield call(productsApi.getAll)
-        console.log("res", response);
         yield put(getProductList(response.data))
         
     } catch (error) {
